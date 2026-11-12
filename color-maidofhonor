@@ -1,0 +1,670 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Maid of Honor Proposal | StudeoM</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Great+Vibes&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --page: #ffffff;
+  --ink: #000000;
+  --heart: #A8BDD0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--page);
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.screen {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.intro {
+  position: absolute;
+  top: calc(12% + 35px);
+  left: 12px;
+  right: 12px;
+  min-height: 1em;
+  text-align: center;
+  color: #000000;
+  font: 400 clamp(13px,3.5vw,20px)/1.5
+    'Courier Prime', monospace;
+}
+
+/* Original heart and position */
+
+.stage {
+  position: relative;
+  width: min(350px,90vw);
+  aspect-ratio: 1;
+  flex: none;
+  transform: translateY(35px);
+}
+
+/* Heart-shaped mask for hidden text */
+
+.reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--ink);
+  pointer-events: none;
+
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 350 350'%3E%3Cpath fill='white' d='M175 285 C175 285 45 205 45 115 C45 65 90 35 130 35 C155 35 175 55 175 55 C175 55 195 35 220 35 C260 35 305 65 305 115 C305 205 175 285 175 285 Z'/%3E%3C/svg%3E");
+
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 350 350'%3E%3Cpath fill='white' d='M175 285 C175 285 45 205 45 115 C45 65 90 35 130 35 C155 35 175 55 175 55 C175 55 195 35 220 35 C260 35 305 65 305 115 C305 205 175 285 175 285 Z'/%3E%3C/svg%3E");
+
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* Remove mask only after scratch fade completes */
+
+.stage.reveal-complete .reveal {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.message {
+  width: 100%;
+  padding: 0 8px;
+}
+
+.caps {
+  font-family: 'Cinzel', Georgia, serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .23em;
+  line-height: 1.4;
+}
+
+.recipient {
+  font-size: clamp(19px,3vw,27px);
+  white-space: nowrap;
+  margin: 0 0 8px;
+}
+
+.question {
+  font-size: clamp(14px,2.6vw,20px);
+  white-space: nowrap;
+  margin: 0 0 8px;
+}
+
+/* Original horizontal calligraphy */
+
+.script {
+  font-family: 'Great Vibes',
+    'Brush Script MT', cursive;
+  font-weight: 400;
+  font-size: clamp(42px,7vw,58px);
+  line-height: 1.3;
+  white-space: nowrap;
+  margin: 0;
+}
+
+/* Scratchable heart */
+
+#scratch {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+  transition: opacity .85s ease;
+}
+
+.scratch-label {
+  position: absolute;
+  z-index: 3;
+  top: 38%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #ffffff;
+  font: 700 16px 'Courier Prime', monospace;
+  pointer-events: none;
+  text-shadow: 0 1px 3px #0003;
+  transition: opacity .2s;
+}
+
+.stage.revealed #scratch,
+.stage.revealed .scratch-label {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Floating hearts */
+
+#particles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Mobile adjustments */
+
+@media (max-width: 400px) {
+  .caps {
+    letter-spacing: .13em;
+  }
+
+  .recipient {
+    font-size: clamp(18px,5vw,24px);
+  }
+
+  .question {
+    font-size: clamp(13px,3.5vw,17px);
+  }
+
+  .script {
+    font-size: clamp(38px,10vw,50px);
+  }
+}
+
+/* Short screens */
+
+@media (max-height: 570px) {
+  .intro {
+    top: 5%;
+  }
+
+  .stage {
+    transform: translateY(15px);
+    width: min(310px,80vw,65vh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #scratch,
+  .scratch-label {
+    transition: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="screen">
+
+  <div class="intro" id="intro" aria-hidden="true"></div>
+
+  <div class="stage" id="stage">
+
+    <section
+      class="reveal"
+      id="reveal"
+      aria-live="polite">
+
+      <div class="message">
+
+        <div class="recipient caps" id="recipient">
+          ASHLEY,
+        </div>
+
+        <div class="question caps">
+          WILL YOU BE MY
+        </div>
+
+        <div class="script" id="mainScript">
+          Maid of Honor?
+        </div>
+
+      </div>
+    </section>
+
+    <canvas
+      id="scratch"
+      width="350"
+      height="350"
+      aria-label="Scratch the heart to reveal the question">
+    </canvas>
+
+    <div class="scratch-label" id="scratchLabel">
+      scratch to reveal
+    </div>
+
+  </div>
+
+</main>
+
+<canvas id="particles"></canvas>
+
+<script>
+(() => {
+  'use strict';
+
+  // Personalized URL:
+  // ?n=Ashley&c=A8BDD0
+
+  const params = new URLSearchParams(
+    window.location.search
+  );
+
+  function safeHex(value, fallback) {
+    const code = (value || '')
+      .trim()
+      .replace(/^#/, '');
+
+    return /^[0-9a-f]{6}$/i.test(code)
+      ? '#' + code
+      : fallback;
+  }
+
+  const heartColor = safeHex(
+    params.get('c') || params.get('color'),
+    '#A8BDD0'
+  );
+
+  document.documentElement.style.setProperty(
+    '--heart',
+    heartColor
+  );
+
+  // Personalized name
+
+  const rawName = (
+    params.get('n') ||
+    params.get('name') ||
+    'Ashley'
+  ).trim().slice(0, 60) || 'Ashley';
+
+  const recipient = document.getElementById('recipient');
+  const mainScript = document.getElementById('mainScript');
+  const question = document.querySelector('.question');
+
+  recipient.textContent =
+    rawName.toLocaleUpperCase() + ',';
+
+  const stage = document.getElementById('stage');
+  const scratch = document.getElementById('scratch');
+  const label = document.getElementById('scratchLabel');
+
+  const ctx = scratch.getContext('2d', {
+    willReadFrequently: true
+  });
+
+  const particlesCanvas =
+    document.getElementById('particles');
+
+  const pctx = particlesCanvas.getContext('2d');
+
+  if (!ctx || !pctx) return;
+
+  let particles = [];
+  let drawing = false;
+  let finished = false;
+  let last = null;
+  let lastCoverageCheck = 0;
+
+  // Automatically fit text without changing fonts.
+  // Uses actual rendered text width.
+
+  function fitOneLine(element, maxWidth) {
+    element.style.fontSize = '';
+
+    const original = parseFloat(
+      getComputedStyle(element).fontSize
+    );
+
+    let size = original;
+
+    const range = document.createRange();
+    range.selectNodeContents(element);
+
+    while (
+      size > 5 &&
+      range.getBoundingClientRect().width > maxWidth
+    ) {
+      size -= .5;
+      element.style.fontSize = size + 'px';
+    }
+  }
+
+  function fitText() {
+    const width = stage.getBoundingClientRect().width;
+
+    fitOneLine(recipient, width * .68);
+    fitOneLine(question, width * .72);
+    fitOneLine(mainScript, width * .80);
+  }
+
+  fitText();
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(fitText);
+  }
+
+  window.addEventListener('resize', fitText);
+
+  // Original heart shape
+
+  const heart = new Path2D(
+    'M175 285 ' +
+    'C175 285 45 205 45 115 ' +
+    'C45 65 90 35 130 35 ' +
+    'C155 35 175 55 175 55 ' +
+    'C175 55 195 35 220 35 ' +
+    'C260 35 305 65 305 115 ' +
+    'C305 205 175 285 175 285 Z'
+  );
+
+  // White cover blocks hidden text.
+  // Only scratching reveals the text underneath.
+
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, 350, 350);
+
+  ctx.fillStyle = heartColor;
+  ctx.fill(heart);
+
+  // Pointer coordinates
+
+  function point(e) {
+    const r = scratch.getBoundingClientRect();
+
+    return {
+      x: (e.clientX - r.left) * 350 / r.width,
+      y: (e.clientY - r.top) * 350 / r.height
+    };
+  }
+
+  function eraseCircle(p) {
+    ctx.save();
+
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.clip(heart);
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 23, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function start(e) {
+    if (finished || !e.isPrimary) return;
+
+    drawing = true;
+    last = point(e);
+
+    if (scratch.setPointerCapture) {
+      scratch.setPointerCapture(e.pointerId);
+    }
+
+    eraseCircle(last);
+    label.style.opacity = '0';
+
+    checkCoverage();
+    e.preventDefault();
+  }
+
+  function move(e) {
+    if (
+      !drawing ||
+      finished ||
+      !last ||
+      !e.isPrimary
+    ) {
+      return;
+    }
+
+    const p = point(e);
+
+    if (
+      Math.hypot(
+        p.x - last.x,
+        p.y - last.y
+      ) > 0
+    ) {
+      ctx.save();
+
+      ctx.globalCompositeOperation =
+        'destination-out';
+
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = 46;
+      ctx.clip(heart);
+
+      ctx.beginPath();
+      ctx.moveTo(last.x, last.y);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+
+      ctx.restore();
+
+      last = p;
+    }
+
+    checkCoverage();
+    e.preventDefault();
+  }
+
+  // Require 80% scratching
+
+  function checkCoverage() {
+    if (finished) return;
+
+    const now = performance.now();
+
+    if (now - lastCoverageCheck < 90) {
+      return;
+    }
+
+    lastCoverageCheck = now;
+
+    const data = ctx.getImageData(
+      0, 0, 350, 350
+    ).data;
+
+    let total = 0;
+    let erased = 0;
+
+    for (let y = 35; y <= 285; y += 7) {
+      for (let x = 42; x <= 308; x += 7) {
+
+        if (!ctx.isPointInPath(heart, x, y)) {
+          continue;
+        }
+
+        total++;
+
+        if (
+          data[(y * 350 + x) * 4 + 3] < 128
+        ) {
+          erased++;
+        }
+      }
+    }
+
+    if (total && erased / total >= .80) {
+      reveal();
+    }
+  }
+
+  function end() {
+    if (drawing && !finished) {
+      checkCoverage();
+    }
+
+    drawing = false;
+    last = null;
+  }
+
+  scratch.addEventListener('pointerdown', start);
+  scratch.addEventListener('pointermove', move);
+  scratch.addEventListener('pointerup', end);
+  scratch.addEventListener('pointercancel', end);
+  scratch.addEventListener('lostpointercapture', end);
+
+  // Floating hearts
+
+  function resize() {
+    const dpr = Math.min(
+      window.devicePixelRatio || 1,
+      2
+    );
+
+    particlesCanvas.width =
+      Math.round(innerWidth * dpr);
+
+    particlesCanvas.height =
+      Math.round(innerHeight * dpr);
+
+    pctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  function heartParticle(x, y, s, a) {
+    pctx.save();
+
+    pctx.globalAlpha = a;
+    pctx.fillStyle = heartColor;
+    pctx.beginPath();
+
+    pctx.moveTo(x, y + s * .9);
+
+    pctx.bezierCurveTo(
+      x - s * 1.7, y - s * .1,
+      x - s * .7, y - s * .85,
+      x, y - s * .25
+    );
+
+    pctx.bezierCurveTo(
+      x + s * .7, y - s * .85,
+      x + s * 1.7, y - s * .1,
+      x, y + s * .9
+    );
+
+    pctx.fill();
+    pctx.restore();
+  }
+
+  function spawn() {
+    particles.push({
+      x: Math.random() * innerWidth,
+      y: innerHeight + 25,
+      s: 5 + Math.random() * 10,
+      vx: (Math.random() - .5) * 1.9,
+      vy: -(1 + Math.random() * 2.4),
+      life: 1
+    });
+  }
+
+  function animate() {
+    pctx.clearRect(
+      0, 0, innerWidth, innerHeight
+    );
+
+    particles = particles.filter(
+      p => p.life > 0
+    );
+
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= .004;
+
+      heartParticle(
+        p.x,
+        p.y,
+        p.s,
+        Math.max(0, p.life)
+      );
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  // Smooth final reveal
+
+  function reveal() {
+    if (finished) return;
+
+    finished = true;
+    drawing = false;
+
+    stage.classList.add('revealed');
+
+    // Keep mask until canvas fade finishes.
+    // Prevents text flashing outside heart.
+
+    window.setTimeout(() => {
+      stage.classList.add('reveal-complete');
+    }, 900);
+
+    let bursts = 0;
+
+    const timer = setInterval(() => {
+      spawn();
+      spawn();
+
+      if (++bursts >= 40) {
+        clearInterval(timer);
+      }
+    }, 180);
+  }
+
+  // Intro typewriter
+
+  const intro = document.getElementById('intro');
+  const line = 'I have something to ask...';
+
+  let i = 0;
+
+  (function type() {
+    if (i < line.length) {
+      intro.textContent += line.charAt(i++);
+      setTimeout(type, 95);
+    }
+  })();
+
+})();
+</script>
+</body>
+</html>
